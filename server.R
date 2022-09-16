@@ -29,9 +29,9 @@ server <- function(input, output, session) {
 
   # Simple server stuff goes here ------------------------------------------------------------
   reactiveRevBal <- reactive({
-    dfRevBal %>% filter(
+    dfProgressHE %>% filter(
       area_name == input$selectArea | area_name == "England",
-      school_phase == input$selectPhase
+      data_type == input$selectPhase
     )
   })
 
@@ -82,7 +82,7 @@ server <- function(input, output, session) {
       paste0("£", format((reactiveRevBal() %>% filter(
         year == max(year),
         area_name == input$selectArea,
-        school_phase == input$selectPhase
+        data_type == input$selectPhase
       ))$average_revenue_balance,
       big.mark = ","
       )),
@@ -95,7 +95,7 @@ server <- function(input, output, session) {
     latest <- (reactiveRevBal() %>% filter(
       year == max(year),
       area_name == input$selectArea,
-      school_phase == input$selectPhase
+      data_type == input$selectPhase
     ))$average_revenue_balance
     penult <- (reactiveRevBal() %>% filter(
       year == max(year) - 1,
